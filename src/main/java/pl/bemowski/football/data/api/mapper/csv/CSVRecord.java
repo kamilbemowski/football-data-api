@@ -1,5 +1,7 @@
 package pl.bemowski.football.data.api.mapper.csv;
 
+import pl.bemowski.football.data.api.model.Result;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -36,5 +38,9 @@ public class CSVRecord {
 
     public LocalDate getLocalDate(String value) {
         return LocalDate.parse(getString(value), DateTimeFormatter.ofPattern("dd/MM/yy"));
+    }
+
+    public Result getResult(String value) {
+        return Result.valueOf(value);
     }
 }
