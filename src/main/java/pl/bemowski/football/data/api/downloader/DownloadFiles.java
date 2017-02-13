@@ -1,0 +1,63 @@
+package pl.bemowski.football.data.api.downloader;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by Kamil Bemowski on 2017-02-13.
+ */
+@Component
+class DownloadFiles {
+
+    private static final Logger LOGGER = Logger.getLogger(DownloadFiles.class);
+    @Autowired
+    private CSVRecordReader csvRecordReader;
+
+    @PostConstruct
+    public void init() {
+        DownloadFiles downloadFiles = new DownloadFiles();
+        List<File> allZipPackages =
+                downloadFiles.getAllZipPackages();
+        UnzipFiles unzipFiles = new UnzipFiles();
+        Map<String, InputStream> valueMap = unzipFiles.unzipFiles(allZipPackages);
+        try {
+            csvRecordReader.readCSVFiles(valueMap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<File> getAllZipPackages() {
+        List<File> zipFiles = new ArrayList<>();
+        int startYear = 1993;
+        int endYear = LocalDateTime.now().getYear();
+        for (int i = startYear; i <= endYear; i++) {
+            int j = i + 1;
+            String shortSeason = String.valueOf(i).substring(2) + String.valueOf(j).substring(2);
+
+            try {
+                File destination = new File(shortSeason + ".zip");
+                String zipUrl = "http://www.football-data.co.uk/mmz4281/" + shortSeason + "/data.zip";
+                FileUtils.copyURLToFile(
+                        new URL(zipUrl),
+                        destination);
+                zipFiles.add(destination);
+            } catch (IOException e) {
+                LOGGER.warn("Could not download file", e);
+            }
+        }
+        return zipFiles;
+    }
+}
