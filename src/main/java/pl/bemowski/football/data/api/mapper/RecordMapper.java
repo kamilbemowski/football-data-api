@@ -27,7 +27,7 @@ public class RecordMapper {
             record.setHalfTimeHomeGoals(csvRecord.getInteger("HTHG"));
             record.setHalfTimeAwayGoals(csvRecord.getInteger("HTAG"));
             record.setHalfTimeResult(csvRecord.getResult("HTR"));
-            record.setAttendance(csvRecord.getInteger("Attendance"));
+            record.setAttendance(csvRecord.getString("Attendance"));
             record.setRefree(csvRecord.getString("Refreee"));
             record.setHomeShots(csvRecord.getInteger("HS"));
             record.setAwayShots(csvRecord.getInteger("AS"));
@@ -47,54 +47,49 @@ public class RecordMapper {
             record.setAwayRedCards(csvRecord.getInteger("AR"));
             record.setHomeBookingPoints(csvRecord.getInteger("HBP"));
             record.setAwayBookingPoints(csvRecord.getInteger("ABP"));
+            record.setBet365homeWinOdds(csvRecord.getDouble("B365H"));
+            record.setBet365DrawOdd(csvRecord.getDouble("B365D"));
+            record.setBet365awayWinOdds(csvRecord.getDouble("B365A"));
+            record.setBlueSquareHomeWinOdds(csvRecord.getDouble("BSH"));
+            record.setBlueSquareDrawOdds(csvRecord.getDouble("BSD"));
+            record.setBlueSquareAwayWinOdds(csvRecord.getDouble("BSA"));
+            record.setBeWinHomeWinOdds(csvRecord.getDouble("BWH"));
+            record.setBeWinDrawOdds(csvRecord.getDouble("BWD"));
+            record.setBeWinAwayWinOdds(csvRecord.getDouble("BWA"));
+            record.setGamebookershomeWinOdds(csvRecord.getDouble("GBH"));
+            record.setGamebookersDrawOdd(csvRecord.getDouble("GBD"));
+            record.setGamebookersawayWinOdds(csvRecord.getDouble("GBA"));
+            record.setInterwettenhomeWinOdds(csvRecord.getDouble("IWH"));
+            record.setInterwettenDrawOdd(csvRecord.getDouble("IWD"));
+            record.setInterwettenawayWinOdds(csvRecord.getDouble("IWA"));
+            record.setLadbrokeshomeWinOdds(csvRecord.getDouble("LBH"));
+            record.setLadbrokesDrawOdd(csvRecord.getDouble("LBD"));
+            record.setLadbrokesawayWinOdds(csvRecord.getDouble("LBA"));
+            record.setPinnaclehomeWinOdds(csvRecord.getDouble("PSH"));
+            record.setPinnacleDrawOdd(csvRecord.getDouble("PSD"));
+            record.setPinnacleawayWinOdds(csvRecord.getDouble("PSA"));
+            record.setSportingOddsHomeWinOdds(csvRecord.getDouble("SOH"));
+            record.setSportingOddsDrawOdds(csvRecord.getDouble("SOD"));
+            record.setSportingOddsAwayWinOdds(csvRecord.getDouble("SOA"));
+            record.setSportingbethomeWinOdds(csvRecord.getDouble("SBH"));
+            record.setSportingbetDrawOdd(csvRecord.getDouble("SBD"));
+            record.setSportingbetawayWinOdds(csvRecord.getDouble("SBA"));
+            record.setStanJamesHomeWinOdds(csvRecord.getDouble("SJH"));
+            record.setStanJamesDrawOdds(csvRecord.getDouble("SJD"));
+            record.setStanJamesAwayWinOdds(csvRecord.getDouble("SJA"));
+            record.setStanleybethomeWinOdds(csvRecord.getDouble("SYH"));
+            record.setStanleybetDrawOdd(csvRecord.getDouble("SYD"));
+            record.setStanleybetawayWinOdds(csvRecord.getDouble("SYA"));
+            record.setVCBetHomeWinOdds(csvRecord.getDouble("VCH"));
+            record.setVCBetDrawOdds(csvRecord.getDouble("VCD"));
+            record.setVCBetAwayWinOdds(csvRecord.getDouble("VCA"));
+            record.setWilliamHillHomeWinOdds(csvRecord.getDouble("WHH"));
+            record.setWilliamHillDrawOdds(csvRecord.getDouble("WHD"));
+            record.setWilliamHillAwayWinOdds(csvRecord.getDouble("WHA"));
         } catch (IllegalArgumentException ex) {
             LOGGER.info("Cannot find field", ex);
         }
         /**
-         * Match Statistics (where available)
-         *
-         * Key to 1X2 (match) betting odds data:
-         * 
-         * B365H = Bet365 home win odds
-         * B365D = Bet365 draw odds
-         * B365A = Bet365 away win odds
-         * BSH = Blue Square home win odds
-         * BSD = Blue Square draw odds
-         * BSA = Blue Square away win odds
-         * BWH = Bet&Win home win odds
-         * BWD = Bet&Win draw odds
-         * BWA = Bet&Win away win odds
-         * GBH = Gamebookers home win odds
-         * GBD = Gamebookers draw odds
-         * GBA = Gamebookers away win odds
-         * IWH = Interwetten home win odds
-         * IWD = Interwetten draw odds
-         * IWA = Interwetten away win odds
-         * LBH = Ladbrokes home win odds
-         * LBD = Ladbrokes draw odds
-         * LBA = Ladbrokes away win odds
-         * PSH = Pinnacle home win odds
-         * PSD = Pinnacle draw odds
-         * PSA Pinnacle away win odds
-         * SOH = Sporting Odds home win odds
-         * SOD = Sporting Odds draw odds
-         * SOA = Sporting Odds away win odds
-         * SBH = Sportingbet home win odds
-         * SBD = Sportingbet draw odds
-         * SBA = Sportingbet away win odds
-         * SJH = Stan James home win odds
-         * SJD = Stan James draw odds
-         * SJA = Stan James away win odds
-         * SYH = * Stanleybet home win odds
-         * SYD = Stanleybet draw odds
-         * SYA = Stanleybet away win odds
-         * VCH = VC Bet home win odds
-         * VCD = VC Bet draw odds
-         * VCA = VC Bet away win odds
-         * WHH = William Hill home win odds
-         * WHD = William Hill draw odds
-         * WHA = William Hill away win odds
-         * 
          * Bb1X2 = Number of BetBrain bookmakers used to calculate match odds averages and maximums
          * BbMxH = Betbrain maximum home win odds
          * BbAvH = Betbrain average home win odds

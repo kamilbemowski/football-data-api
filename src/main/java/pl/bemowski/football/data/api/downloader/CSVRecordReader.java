@@ -24,7 +24,7 @@ public class CSVRecordReader {
         files.forEach((fileName, file) -> {
             try (final Reader reader = new InputStreamReader(file, "UTF-8")) {
                 final CSVParser parser = new CSVParser(reader);
-                parser.getRecords().parallelStream().forEach(r -> mapper.map(r));
+                parser.getRecords().forEach(r -> mapper.map(r));
             } catch (IOException e) {
                 e.printStackTrace();
             }

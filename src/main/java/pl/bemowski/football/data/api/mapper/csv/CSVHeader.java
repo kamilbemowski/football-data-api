@@ -19,7 +19,7 @@ class CSVHeader {
         }
     }
 
-    int getPosition(String value) {
+    Integer getPosition(String value) {
         return valuePositionMap.get(value);
     }
 }
