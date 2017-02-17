@@ -1,7 +1,6 @@
 package pl.bemowski.football.data.api.mapper;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
 
 import pl.bemowski.football.data.api.mapper.csv.CSVRecord;
 import pl.bemowski.football.data.api.model.Record;
@@ -9,7 +8,6 @@ import pl.bemowski.football.data.api.model.Record;
 /**
  * Created by Kamil Bemowski on 2017-02-13.
  */
-@Component
 public class RecordMapper {
 
     private static final Logger LOGGER = Logger.getLogger(RecordMapper.class);

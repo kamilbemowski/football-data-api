@@ -1,6 +1,6 @@
 package pl.bemowski.football.data.api.mapper.csv;
 
-import org.springframework.util.StringUtils;
+import pl.bemowski.football.data.api.mapper.utils.StringUtils;
 import pl.bemowski.football.data.api.model.Result;
 
 import java.time.LocalDate;

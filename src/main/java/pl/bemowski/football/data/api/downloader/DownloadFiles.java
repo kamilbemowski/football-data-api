@@ -2,8 +2,6 @@ package pl.bemowski.football.data.api.downloader;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -18,18 +16,18 @@ import java.util.Map;
 /**
  * Created by Kamil Bemowski on 2017-02-13.
  */
-@Component
 class DownloadFiles {
 
     private static final Logger LOGGER = Logger.getLogger(DownloadFiles.class);
-    @Autowired
     private CSVRecordReader csvRecordReader;
+
+    DownloadFiles(CSVRecordReader csvRecordReader) {
+        this.csvRecordReader = csvRecordReader;
+    }
 
     @PostConstruct
     public void init() {
-        DownloadFiles downloadFiles = new DownloadFiles();
-        List<File> allZipPackages =
-                downloadFiles.getAllZipPackages();
+        List<File> allZipPackages = getAllZipPackages();
         UnzipFiles unzipFiles = new UnzipFiles();
         Map<String, InputStream> valueMap = unzipFiles.unzipFiles(allZipPackages);
         try {

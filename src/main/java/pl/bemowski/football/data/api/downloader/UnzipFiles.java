@@ -1,7 +1,6 @@
 package pl.bemowski.football.data.api.downloader;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,18 +13,17 @@ import java.util.zip.ZipFile;
 /**
  * Created by Kamil Bemowski on 2017-02-13.
  */
-@Component
-public class UnzipFiles {
+class UnzipFiles {
 
     private static final Logger LOGGER = Logger.getLogger(UnzipFiles.class);
 
     /**
-     * return multivaluemap with season and league code as a key and input stream as a value
+     * return map with season and league code as a key and input stream as a value
      * 
-     * @param files
+     * @param files files with results
      * @return
      */
-    public Map<String, InputStream> unzipFiles(List<File> files) {
+    Map<String, InputStream> unzipFiles(List<File> files) {
         Map<String, InputStream> valueMap = new LinkedHashMap<>();
         files.forEach(f -> {
             String fileName = f.getName();
