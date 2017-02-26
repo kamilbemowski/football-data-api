@@ -1,13 +1,15 @@
 package pl.bemowski.football.data.api.downloader;
 
-import org.apache.log4j.Logger;
+import com.google.common.base.MoreObjects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
@@ -15,26 +17,24 @@ import java.util.zip.ZipFile;
  */
 class UnzipFiles {
 
-    private static final Logger LOGGER = Logger.getLogger(UnzipFiles.class);
+    private static final Logger LOGGER = LogManager.getLogger(UnzipFiles.class);
 
     /**
-     * return map with season and league code as a key and input stream as a value
-     * 
+     * return mapToRecord with season and league code as a keyValue and input stream as a value
+     *
      * @param files files with results
      * @return
      */
-    Map<String, InputStream> unzipFiles(List<File> files) {
-        Map<String, InputStream> valueMap = new LinkedHashMap<>();
-        files.forEach(f -> {
-            String fileName = f.getName();
+    Map<String, InputStream> unzipFiles(final Iterable<File> files) {
+        final Map<String, InputStream> valueMap = new LinkedHashMap<>();
+        files.forEach(file -> {
             try {
-                ZipFile zip = new ZipFile(f);
-                zip.stream().forEach(e -> {
+                final ZipFile zip = new ZipFile(file);
+                final String fileName = file.getName();
+                zip.stream().forEach(entry -> {
                     try {
-                        InputStream inputStream = zip.getInputStream(e);
-                            String key = fileName.substring(0, fileName.indexOf(".zip"))
-                                    + e.getName().substring(0, e.getName().indexOf(".csv"));
-                            valueMap.put(key, inputStream);
+                        final TransformZipFile zipFile = new TransformZipFile(zip, fileName, entry);
+                        valueMap.put(zipFile.getKeyValue(), zipFile.getInputStream());
                     } catch (IOException ex) {
                         LOGGER.error("Cannot read file", ex);
                     }
@@ -45,5 +45,33 @@ class UnzipFiles {
 
         });
         return valueMap;
+    }
+
+    private static class TransformZipFile {
+        private final InputStream inputStream;
+        private final String keyValue;
+
+        TransformZipFile(final ZipFile zip, final String fileName, final ZipEntry entry) throws IOException {
+            this.inputStream = zip.getInputStream(entry);
+            final String name = entry.getName();
+            this.keyValue = new StringBuilder(fileName.substring(0, fileName.indexOf(".zip")))
+                    .append(name.substring(0, name.indexOf(".csv"))).toString();
+        }
+
+        InputStream getInputStream() {
+            return inputStream;
+        }
+
+        String getKeyValue() {
+            return keyValue;
+        }
+
+        @Override
+        public String toString() {
+            return MoreObjects.toStringHelper(this)
+                    .add("inputStream", inputStream)
+                    .add("keyValue", keyValue)
+                    .toString();
+        }
     }
 }
