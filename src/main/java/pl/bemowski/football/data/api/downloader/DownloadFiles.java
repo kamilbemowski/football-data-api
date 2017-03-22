@@ -19,7 +19,9 @@ import java.util.Map;
  */
 class DownloadFiles {
 
+    public static final String FOOTBALL_DATA_FILE_NAME = "/data.zip";
     private static final Logger LOGGER = LogManager.getLogger(DownloadFiles.class);
+    public static final String FOOTBALL_DATA_URL = "http://www.football-data.co.uk/mmz4281/";
     private CSVRecordReader csvRecordReader;
 
     DownloadFiles(CSVRecordReader csvRecordReader) {
@@ -40,15 +42,15 @@ class DownloadFiles {
 
     public List<File> getAllZipPackages() {
         List<File> zipFiles = new ArrayList<>();
-        int startYear = 1993;
-        int endYear = LocalDateTime.now().getYear();
+        final int startYear = 1993;
+        final int endYear = LocalDateTime.now().getYear();
         for (int i = startYear; i <= endYear; i++) {
-            int j = i + 1;
-            String shortSeason = String.valueOf(i).substring(2) + String.valueOf(j).substring(2);
+            final int j = i + 1;
+            final String shortSeason = getSeasonShortName(new SeasonNameCreator(i, j));
 
             try {
-                File destination = new File(shortSeason + ".zip");
-                String zipUrl = "http://www.football-data.co.uk/mmz4281/" + shortSeason + "/data.zip";
+                final File destination = new File(this.getClass().getClassLoader().getResource("/") + shortSeason + ".zip");
+                final String zipUrl = FOOTBALL_DATA_URL + shortSeason + FOOTBALL_DATA_FILE_NAME;
                 FileUtils.copyURLToFile(
                         new URL(zipUrl),
                         destination);
@@ -58,5 +60,9 @@ class DownloadFiles {
             }
         }
         return zipFiles;
+    }
+
+    private String getSeasonShortName(SeasonNameCreator seasonNameCreator) {
+        return String.valueOf(seasonNameCreator.getI()).substring(2) + String.valueOf(seasonNameCreator.getJ()).substring(2);
     }
 }
