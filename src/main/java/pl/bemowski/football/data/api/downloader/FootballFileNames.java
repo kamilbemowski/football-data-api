@@ -3,17 +3,18 @@ package pl.bemowski.football.data.api.downloader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
  * Created by Kamil Bemowski on 2017-03-03.
  */
-public class FileNames {
-    private static final FileNames INSTANCE = new FileNames();
+public class FootballFileNames {
+    private static final FootballFileNames INSTANCE = new FootballFileNames();
     private int endYear = LocalDateTime.now().getYear();
     private List<String> list = generate(endYear);
 
-    public void forEach(Consumer<? super String> consumer) {
+    void forEach(Consumer<? super String> consumer) {
         int currentYear = LocalDateTime.now().getYear();
         if (currentYear != endYear) {
             generate(endYear);
@@ -32,7 +33,15 @@ public class FileNames {
         return list;
     }
 
-    public static FileNames instance() {
+    public static FootballFileNames instance() {
         return INSTANCE;
+    }
+
+    public Optional<String> last() {
+        try {
+            return Optional.ofNullable(list.get(list.size() - 1));
+        } catch (final IndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 }

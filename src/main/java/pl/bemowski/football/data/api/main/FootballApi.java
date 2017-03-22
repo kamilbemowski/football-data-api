@@ -14,11 +14,11 @@ class FootballApi {
     static FootballApi start() {
         LOGGER.info("Football Api has started.");
         final FootballApi instance = FootballApiHolder.INSTANCE;
-        instance.runThread(FootballApiThreads.instance());
+        instance.runSchedulers(FootballApiThreads.instance());
         return instance;
     }
 
-    private void runThread(final FootballApiThreads threads) {
+    private void runSchedulers(final FootballApiThreads threads) {
         threads.schedule(new FootballDataChecker(), 1, TimeUnit.SECONDS);
     }
 

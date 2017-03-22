@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,23 +39,18 @@ class DownloadFiles {
 
     public List<File> getAllZipPackages() {
         List<File> zipFiles = new ArrayList<>();
-        int startYear = 1993;
-        int endYear = LocalDateTime.now().getYear();
-        for (int i = startYear; i <= endYear; i++) {
-            int j = i + 1;
-            String shortSeason = String.valueOf(i).substring(2) + String.valueOf(j).substring(2);
+        FootballFileNames fileNames = FootballFileNames.instance();
 
+        fileNames.forEach(shortSeason -> {
             try {
                 File destination = new File(shortSeason + ".zip");
                 String zipUrl = "http://www.football-data.co.uk/mmz4281/" + shortSeason + "/data.zip";
-                FileUtils.copyURLToFile(
-                        new URL(zipUrl),
-                        destination);
+                FileUtils.copyURLToFile(new URL(zipUrl), destination);
                 zipFiles.add(destination);
             } catch (IOException e) {
                 LOGGER.warn("Could not download file", e);
             }
-        }
+        });
         return zipFiles;
     }
 }
