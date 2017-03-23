@@ -3,6 +3,7 @@ package pl.bemowski.football.data.api.main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  */
 class FootballApi {
     private static final Logger LOGGER = LogManager.getLogger(FootballApi.class);
+    private ThreadPoolExecutor threadPool;
 
     static FootballApi start() {
         LOGGER.info("Football Api has started.");
@@ -21,6 +23,7 @@ class FootballApi {
     private void runSchedulers(final FootballApiThreads threads) {
         threads.schedule(new FootballDataChecker(), 1, TimeUnit.SECONDS);
     }
+
 
     private static class FootballApiHolder {
         private static final FootballApi INSTANCE = new FootballApi();

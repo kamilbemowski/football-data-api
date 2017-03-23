@@ -18,7 +18,9 @@ import java.util.Map;
  */
 class DownloadFiles {
 
+    public static final String FOOTBALL_DATA_FILE_NAME = "/data.zip";
     private static final Logger LOGGER = LogManager.getLogger(DownloadFiles.class);
+    public static final String FOOTBALL_DATA_URL = "http://www.football-data.co.uk/mmz4281/";
     private CSVRecordReader csvRecordReader;
 
     DownloadFiles(CSVRecordReader csvRecordReader) {
@@ -52,5 +54,9 @@ class DownloadFiles {
             }
         });
         return zipFiles;
+    }
+
+    private String getSeasonShortName(SeasonNameCreator seasonNameCreator) {
+        return String.valueOf(seasonNameCreator.getI()).substring(2) + String.valueOf(seasonNameCreator.getJ()).substring(2);
     }
 }
