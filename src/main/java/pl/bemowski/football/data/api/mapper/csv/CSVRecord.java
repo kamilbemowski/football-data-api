@@ -1,5 +1,6 @@
 package pl.bemowski.football.data.api.mapper.csv;
 
+import lombok.extern.log4j.Log4j2;
 import pl.bemowski.football.data.api.mapper.utils.StringUtils;
 import pl.bemowski.football.data.api.model.Result;
 
@@ -8,14 +9,14 @@ import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by Kamil Bemowski on 2017-02-13.
  */
+@Log4j2
 public class CSVRecord {
 
     private CSVHeader header;
@@ -27,33 +28,12 @@ public class CSVRecord {
                     ).toFormatter();
 
     CSVRecord(String line, CSVHeader csvHeader) {
-        List<String> values = Arrays.asList(line.split(""));
-        String word = "";
         int i = 0;
-        String separator = "";
-        boolean endWord = false;
-        for (String sign : values) {
-            if (sign.equals(",") && (separator.equals(",") || separator.equals(""))) {
-                endWord = true;
-                separator = sign;
-            } else if (sign.equals("\"") && separator.equals("\"")) {
-                endWord = true;
-                separator = "";
-            } else if (sign.equals("\"")) {
-                separator = sign;
-            } else {
-                word += sign;
-            }
-
-            if (endWord && (!sign.equals(separator) || !word.isEmpty())) {
-                positionValueMap.put(i++, word);
-                word = "";
-                endWord = false;
-                continue;
-            }
-            endWord = false;
+        log.trace("Read line: " + line);
+        String[] words = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+        for (String o : words) {
+            positionValueMap.put(i++, o.replace("\"", ""));
         }
-        positionValueMap.put(i, word);
         this.header = csvHeader;
 
     }
@@ -89,8 +69,25 @@ public class CSVRecord {
     public Double getDouble(String value) {
         String stringValue = getString(value);
         if (!StringUtils.isEmpty(stringValue)) {
-            return Double.parseDouble(stringValue);
+            try {
+                return Double.parseDouble(stringValue);
+            } catch (NumberFormatException e) {
+                log.info("cannot read field: " + value);
+                return null;
+            }
         }
         return null;
+    }
+
+    public int getHeaderSize() {
+        return header.size();
+    }
+
+    public String line() {
+        return String.join(", ", positionValueMap.values());
+    }
+
+    public String getString(String first, String second) {
+        return Optional.ofNullable(getString(first)).orElse(getString(second));
     }
 }

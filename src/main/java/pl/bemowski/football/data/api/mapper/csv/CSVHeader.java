@@ -22,4 +22,8 @@ class CSVHeader {
     Integer getPosition(String value) {
         return valuePositionMap.get(value);
     }
+
+    public int size() {
+        return valuePositionMap.size();
+    }
 }

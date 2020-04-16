@@ -12,7 +12,7 @@ public class FilesChecker {
     public boolean checkIsAllFilesAvailable() {
         FootballFileNames fileNames = FootballFileNames.instance();
         Optional<String> lastFile = fileNames.last();
-        File file = new File(lastFile.orElseGet(() -> "") + ".zip");
+        File file = new File(lastFile.orElse("") + ".zip");
         return file.exists();
     }
 }

@@ -1,0 +1,83 @@
+package pl.bemowski.football.data.api.model;
+
+import lombok.Data;
+
+@Data
+public class Odds {
+    private Integer homeBookingPoints;
+    private Integer awayBookingPoints;
+    private Double bet365homeWinOdds;
+    private Double bet365DrawOdd;
+    private Double bet365awayWinOdds;
+    private Double blueSquareHomeWinOdds;
+    private Double blueSquareDrawOdds;
+    private Double blueSquareAwayWinOdds;
+    private Double beWinHomeWinOdds;
+    private Double beWinDrawOdds;
+    private Double beWinAwayWinOdds;
+    private Double gamebookershomeWinOdds;
+    private Double gamebookersDrawOdd;
+    private Double gamebookersawayWinOdds;
+    private Double interwettenhomeWinOdds;
+    private Double interwettenDrawOdd;
+    private Double interwettenawayWinOdds;
+    private Double ladbrokeshomeWinOdds;
+    private Double ladbrokesDrawOdd;
+    private Double ladbrokesawayWinOdds;
+    private Double pinnaclehomeWinOdds;
+    private Double pinnacleDrawOdd;
+    private Double pinnacleawayWinOdds;
+    private Double sportingOddsHomeWinOdds;
+    private Double sportingOddsDrawOdds;
+    private Double sportingOddsAwayWinOdds;
+    private Double sportingbethomeWinOdds;
+    private Double sportingbetDrawOdd;
+    private Double sportingbetawayWinOdds;
+    private Double stanJamesHomeWinOdds;
+    private Double stanJamesDrawOdds;
+    private Double stanJamesAwayWinOdds;
+    private Double stanleybethomeWinOdds;
+    private Double stanleybetDrawOdd;
+    private Double VCBetHomeWinOdds;
+    private Double VCBetDrawOdds;
+    private Double VCBetAwayWinOdds;
+    private Double williamHillHomeWinOdds;
+    private Double williamHillDrawOdds;
+    private Double williamHillAwayWinOdds;
+    private Double stanleybetawayWinOdds;
+    private Double numberBetBrainBookmakersToCalculate;
+    private Double betbrainAverageHomeWinOdds;
+    private Double betbrainMaximumDrawOdds;
+    private Double betbrainAverageDrawWinOdds;
+    private Double betbrainMaximumAwayWinOdds;
+    private Double betbrainAverageAwayWinOdds;
+    private Double betbrainMaximumOver25Goals;
+    private Double betbrainAverageOver25Goals;
+    private Double betbrainMaximumUnder25Goals;
+    private Double betbrainAverageUnder25Goals;
+
+    private Double gamebookersOver25Goals;
+    private Double gamebookersUnder25Goals;
+    private Double bet365Over25Goals;
+    private Double bet365Under25Goals;
+
+    private Double betbrainMaximumAsianHandicapHomeTeamOdds;
+    private Double betbrainAverageAsianHandicapHomeTeamOdds;
+    private Double betbrainMaximumAsianHandicapAwayTeamOdds;
+    private Double betbrainAverageAsianHandicapAwayTeamOdds;
+    private Double gamebookersAsianHandicapHomeTeamOdds;
+    private Double gamebookersAsianHandicapAwayTeamOdds;
+    private Double gamebookersSizeOfHandicapHomeTeam;
+    private Double ladbrokesAsianHandicapHomeTeamOdds;
+    private Double ladbrokesAsianHandicapAwayTeamOdds;
+    private Double ladbrokesSizeOfHandicapHomeTeam;
+    private Double bet365AsianHandicapHomeTeamOdds;
+    private Double bet365AsianHandicapAwayTeamOdds;
+    private Double bet365SizeOfHandicapHomeTeam;
+    private Double pinnacleAsianHandicapHomeTeamOdds;
+    private Double pinnacleAsianHandicapAwayTeamOdds;
+    private Double marketMaximumAsianHandicapHomeTeamOdds;
+    private Double marketMaximumAsianHandicapAwayTeamOdds;
+    private Double marketAverageAsianHandicapHomeTeamOdds;
+    private Double marketAverageAsianHandicapAwayTeamOdds;
+}

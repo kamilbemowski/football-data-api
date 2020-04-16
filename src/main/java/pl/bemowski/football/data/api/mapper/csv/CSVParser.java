@@ -36,7 +36,7 @@ public class CSVParser {
     }
 
     private boolean isNotEmpty(String line) {
-        return Arrays.stream(line.split(",")).filter(l-> !l.isEmpty()).count()>0;
+        return Arrays.stream(line.split(",")).anyMatch(l -> !l.isEmpty() && !l.equals("#REF!"));
     }
 
     public List<CSVRecord> getRecords() {

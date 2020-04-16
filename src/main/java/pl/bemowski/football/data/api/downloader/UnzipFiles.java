@@ -3,6 +3,7 @@ package pl.bemowski.football.data.api.downloader;
 import com.google.common.base.MoreObjects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import pl.bemowski.football.data.api.model.FilePackage;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.zip.ZipFile;
 /**
  * Created by Kamil Bemowski on 2017-02-13.
  */
-class UnzipFiles {
+public class UnzipFiles {
 
     private static final Logger LOGGER = LogManager.getLogger(UnzipFiles.class);
 
@@ -25,8 +26,8 @@ class UnzipFiles {
      * @param files files with results
      * @return
      */
-    Map<String, InputStream> unzipFiles(final Iterable<File> files) {
-        final Map<String, InputStream> valueMap = new LinkedHashMap<>();
+    public Map<String, FilePackage> unzipFiles(final Iterable<File> files) {
+        final Map<String, FilePackage> valueMap = new LinkedHashMap<>();
         files.forEach(file -> {
             try {
                 final ZipFile zip = new ZipFile(file);
@@ -34,7 +35,10 @@ class UnzipFiles {
                 zip.stream().forEach(entry -> {
                     try {
                         final TransformZipFile zipFile = new TransformZipFile(zip, fileName, entry);
-                        valueMap.put(zipFile.getKeyValue(), zipFile.getInputStream());
+                        String zipName = zip.getName();
+                        valueMap.put(zipFile.getKeyValue(), FilePackage.builder()
+                                .inputStream(zipFile.getInputStream()).
+                                        season(zipName.substring(0, zipName.indexOf("."))).build());
                     } catch (IOException ex) {
                         LOGGER.error("Cannot read file", ex);
                     }
@@ -42,7 +46,6 @@ class UnzipFiles {
             } catch (IOException e) {
                 LOGGER.error("Cannot open zip file", e);
             }
-
         });
         return valueMap;
     }
