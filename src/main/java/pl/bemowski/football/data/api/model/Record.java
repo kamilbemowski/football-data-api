@@ -25,7 +25,7 @@ public class Record implements Serializable {
     private Integer halfTimeAwayGoals;
     private Result halfTimeResult;
     private String attendance;
-    private String refree;
+    private String referee;
 
     private Statistics statistics;
 

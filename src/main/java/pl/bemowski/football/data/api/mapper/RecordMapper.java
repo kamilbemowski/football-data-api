@@ -44,7 +44,7 @@ public final class RecordMapper {
             record.setHalfTimeAwayGoals(csvRecord.getInteger("HTAG"));
             record.setHalfTimeResult(csvRecord.getResult("HTR"));
             record.setAttendance(csvRecord.getString("Attendance"));
-            record.setRefree(csvRecord.getString("Refreee"));
+            record.setReferee(csvRecord.getString("Refreee", "Referee"));
             Statistics statistics = new Statistics();
             statistics.setHomeShots(csvRecord.getInteger("HS"));
             statistics.setAwayShots(csvRecord.getInteger("AS"));
@@ -143,52 +143,7 @@ public final class RecordMapper {
             odds.setMarketMaximumAsianHandicapAwayTeamOdds(csvRecord.getDouble("MaxAHA"));
             odds.setMarketAverageAsianHandicapHomeTeamOdds(csvRecord.getDouble("AvgAHH"));
             odds.setMarketAverageAsianHandicapAwayTeamOdds(csvRecord.getDouble("AvgAHA"));
-            /*/*
-         *
-         * Key to total goals betting odds:
-         *
-         * BbOU = Number of BetBrain bookmakers used to calculate over/under 2.5 goals (total goals) averages and maximums
-         * BbMx>2.5 = Betbrain maximum over 2.5 goals
-         * BbAv>2.5 = Betbrain average over 2.5 goals
-         * BbMx<2.5 = Betbrain maximum under 2.5 goals
-         * BbAv<2.5 = Betbrain average under 2.5 goals
-         *
-         * GB>2.5 = Gamebookers over 2.5 goals
-         * GB<2.5 = Gamebookers under 2.5 goals
-         * B365>2.5 = Bet365 over 2.5 goals
-         * B365<2.5 = Bet365 under 2.5 goals
-         *
-         *
-         * Key to Asian handicap betting odds:
-         *
-         * BbAH = Number of BetBrain bookmakers used to Asian handicap averages and maximums
-         * BbAHh = Betbrain size of handicap (home team)
-         * BbMxAHH = Betbrain maximum Asian handicap home team odds
-         * BbAvAHH = Betbrain average Asian handicap home team odds
-         * BbMxAHA = Betbrain maximum Asian handicap away team odds
-         * BbAvAHA = Betbrain average Asian handicap away team odds
-         * GBAHH = Gamebookers Asian handicap home team odds
-         * GBAHA = Gamebookers Asian handicap away team odds
-         * GBAH = Gamebookers size of handicap (home team)
-         * LBAHH = Ladbrokes Asian handicap home team odds
-         * LBAHA = Ladbrokes Asian handicap away team odds
-         * LBAH = Ladbrokes size of handicap (home team)
-         * B365AHH = Bet365 Asian handicap home team odds
-         * B365AHA = Bet365 Asian handicap away team odds
-         * B365AH = Bet365 size of handicap (home team)
-         * PAHH = Pinnacle Asian handicap home team odds
-         * PAHA = Pinnacle Asian handicap away team odds
-         * MaxAHH = Market maximum Asian handicap home team odds
-         * MaxAHA = Market maximum Asian handicap away team odds
-         * AvgAHH = Market average Asian handicap home team odds
-         * AvgAHA = Market average Asian handicap away team odds
-         *
-         * Closing odds (last odds before match starts)
-         *
-         * PSCH = Pinnacle closing home win odds
-         * PSCD = Pinnacle closing draw odds
-         * PSCA = Pinnacle closing away win odds
-         */
+
             record.setOdds(odds);
         } catch (final IllegalArgumentException ex) {
             LOGGER.info("Cannot find field", ex);
@@ -196,49 +151,5 @@ public final class RecordMapper {
         return record;
     }
 
-    public static void main(String[] args) {
-        String s = "Betbrain maximum Asian handicap home team odds\n" +
-                "Betbrain average Asian handicap home team odds\n" +
-                "Betbrain maximum Asian handicap away team odds\n" +
-                "Betbrain average Asian handicap away team odds\n" +
-                "Gamebookers Asian handicap home team odds\n" +
-                "Gamebookers Asian handicap away team odds\n" +
-                "Gamebookers size of handicap (home team)\n" +
-                "Ladbrokes Asian handicap home team odds\n" +
-                "Ladbrokes Asian handicap away team odds\n" +
-                "Ladbrokes size of handicap (home team)\n" +
-                "Bet365 Asian handicap home team odds\n" +
-                "Bet365 Asian handicap away team odds\n" +
-                "Bet365 size of handicap (home team)\n" +
-                "Pinnacle Asian handicap home team odds\n" +
-                "Pinnacle Asian handicap away team odds\n" +
-                "Market maximum Asian handicap home team odds\n" +
-                "Market maximum Asian handicap away team odds\n" +
-                "Market average Asian handicap home team odds\n" +
-                "Market average Asian handicap away team odds";
-        String[] lines = s.split("\n");
-        Arrays.stream(lines)
-                .map(cc -> cc.replace("(", ""))
-                .map(cc -> cc.replace(")", ""))
-                .map(WordUtils::capitalizeFully)
-                .map(cc -> cc.replace(" ", ""))
-                .map(cc -> cc.replace(".", ""))
-                .map(cc -> "odds.set" + cc + "(csvRecord.getDouble(\"\"));")
-                .forEach(System.out::println);
-        System.out.println("");
-        Arrays.stream(lines)
-                .map(cc -> cc.replace("(", ""))
-                .map(cc -> cc.replace(")", ""))
-                .map(WordUtils::capitalizeFully)
-                .map(cc -> cc.replace(" ", ""))
-                .map(cc -> cc.replace(".", ""))
-                .map(cc -> {
-                    char[] chars = cc.toCharArray();
-                    chars[0] += 32;
-                    return new String(chars);
-                })
-                .map(cc -> "private Double " + cc + ";")
-                .forEach(System.out::println);
 
-    }
 }
